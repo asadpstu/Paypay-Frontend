@@ -151,7 +151,7 @@ class AssignEmployee extends Component {
         <div className="row content">
           <div className="col-sm-2 sidenav">
             <div className="left-background">
-              <div className="ProblemStatement">Name  -  (Reviewing By x px)</div>
+              <div className="ProblemStatement">Assignee  -  To Whom(count)</div>
               <LeftSidebar content={this.state.content} SendIdState={this.SendIdState}/>
             </div>
             

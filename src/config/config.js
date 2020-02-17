@@ -1,5 +1,5 @@
 let appconfig = {
-    "apibaseurl": "http://localhost:4000",
+    "apibaseurl": "https://thawing-brook-78413.herokuapp.com",
     "applicationBaseUrl" : "http://localhost:3000"
   };
 
