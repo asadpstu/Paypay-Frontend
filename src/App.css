@@ -240,27 +240,12 @@
 }
 
 
+.note{
+  color:green;
+  font-size: small;
+  font-weight: 600;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 .logincssInput{
   width:100px;

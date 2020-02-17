@@ -8,9 +8,9 @@ class ReviewForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       comment : "",
-       selectedEmployee : "",
-       reviewerid :""
+      comment: "",
+      selectedEmployee: "",
+      reviewerid: ""
 
     };
 
@@ -20,95 +20,89 @@ class ReviewForm extends Component {
     this.save = this.save.bind(this)
   }
 
-  onRadioChange(event){
-     this.setState({
-        [event.target.name] : event.target.value 
-     });
-
-  }
-
-  onCheckboxChange(event){
-    if(event.target.checked === true)
-    {
-        this.setState({
-        [event.target.name] : event.target.value 
-        });        
-    }
-    else
-    {
-        this.setState({
-            [event.target.name] : "" 
-        });         
-    }
-  }
-
-  inputChange(event){
+  onRadioChange(event) {
     this.setState({
-      [event.target.name] : event.target.value 
-      }); 
+      [event.target.name]: event.target.value
+    });
+
   }
 
-  async save(e){
-      e.preventDefault();
-      const cretateObject = [];
-      Object.keys(this.state).map((key) => {
-        if(key !== "comment" && key !== "reviewerid" && key !== "selectedEmployee" )
-        {
-          var singlePair = {
-            "name" : key,
-            "value" : this.state[key] 
-          }   
-          cretateObject.push(singlePair);       
-        }
-        
-        return 0;
+  onCheckboxChange(event) {
+    if (event.target.checked === true) {
+      this.setState({
+        [event.target.name]: event.target.value
       });
+    }
+    else {
+      this.setState({
+        [event.target.name]: ""
+      });
+    }
+  }
 
-      const postobject = {
-        "employee_id" : this.state.selectedEmployee,
-        "performance_review" : cretateObject,
-        "reviewer_feedback" : this.state.comment,
-        "reviewer_id" : this.state.reviewerid
+  inputChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  async save(e) {
+    e.preventDefault();
+    const cretateObject = [];
+    Object.keys(this.state).map((key) => {
+      if (key !== "comment" && key !== "reviewerid" && key !== "selectedEmployee") {
+        var singlePair = {
+          "name": key,
+          "value": this.state[key]
+        }
+        cretateObject.push(singlePair);
       }
 
+      return 0;
+    });
 
-      try
-      {
-        const response = await axios.post(
-          appconfig.apibaseurl + "/add/employee-performane-review",
-          postobject,
-          axiosConfig
-        );
-        if (response) {
-          swal({
-            title: "Successfull",
-            text: "Thank you for your time to let us know your thought.",
-            icon: "success",
-            button: "ok"
-          });
-          Object.keys(this.state).map((key) => {
-            if(key !== "reviewerid")
-            {
-              this.setState({[key] : ''});        
-            }
-            
-            return 0;
-          });
-          
-        }        
-      }
-      catch(e)
-      {
+    const postobject = {
+      "employee_id": this.state.selectedEmployee,
+      "performance_review": cretateObject,
+      "reviewer_feedback": this.state.comment,
+      "reviewer_id": this.state.reviewerid
+    }
+
+
+    try {
+      const response = await axios.post(
+        appconfig.apibaseurl + "/add/employee-performane-review",
+        postobject,
+        axiosConfig
+      );
+      if (response) {
         swal({
-          title: "Unsuccessfull",
-          text: "Server error.Please try again.",
-          icon: "error",
+          title: "Successfull",
+          text: "Thank you for your time to let us know your thought.",
+          icon: "success",
           button: "ok"
         });
-      }
-  
+        Object.keys(this.state).map((key) => {
+          if (key !== "reviewerid") {
+            this.setState({ [key]: '' });
+          }
 
-      
+          return 0;
+        });
+
+      }
+    }
+    catch (e) {
+      swal({
+        title: "Unsuccessfull",
+        text: "Server error.Please try again.",
+        icon: "error",
+        button: "ok"
+      });
+    }
+
+
+
   }
 
   componentDidMount() {
@@ -117,36 +111,33 @@ class ReviewForm extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.selectecdUser !== this.props.selectecdUser) {
       this.setState({
-        selectedEmployee : this.props.selectecdUser,
-        reviewerid : this.props.loggedInUserInfo.loggedInUser._id
+        selectedEmployee: this.props.selectecdUser,
+        reviewerid: this.props.loggedInUserInfo.loggedInUser._id
       })
-      if(this.props.selectecdUser && this.props.loggedInUserInfo)
-      {
-        this.getReviewby_ReviewerId_EmployeeId(this.props.loggedInUserInfo.loggedInUser._id,this.props.selectecdUser);
+      if (this.props.selectecdUser && this.props.loggedInUserInfo) {
+        this.getReviewby_ReviewerId_EmployeeId(this.props.loggedInUserInfo.loggedInUser._id, this.props.selectecdUser);
       }
     }
 
   }
 
-  async getReviewby_ReviewerId_EmployeeId(reviewerId,selectedEmployee){
-   
+  async getReviewby_ReviewerId_EmployeeId(reviewerId, selectedEmployee) {
+
     Object.keys(this.state).map((key) => {
-      if(key !== "reviewerid" && key !== "selectedEmployee" )
-      {
-        this.setState({[key] : ''});        
+      if (key !== "reviewerid" && key !== "selectedEmployee") {
+        this.setState({ [key]: '' });
       }
-      
+
       return 0;
     });
 
     //
-    const response = await axios.get(appconfig.apibaseurl+"/view/employee-performane-review/"+reviewerId+"/"+selectedEmployee,axiosConfig);
-    if(response.data.result !== "empty"){
-      this.setState({comment : response.data.records.reviewer_feedback});
-      for(var i=0;i<response.data.records.performance_review.length;i++)
-      {
+    const response = await axios.get(appconfig.apibaseurl + "/view/employee-performane-review/" + reviewerId + "/" + selectedEmployee, axiosConfig);
+    if (response.data.result !== "empty") {
+      this.setState({ comment: response.data.records.reviewer_feedback });
+      for (var i = 0; i < response.data.records.performance_review.length; i++) {
         this.setState({
-          [response.data.records.performance_review[i].name] : response.data.records.performance_review[i].value
+          [response.data.records.performance_review[i].name]: response.data.records.performance_review[i].value
         });
       }
     }
@@ -159,158 +150,158 @@ class ReviewForm extends Component {
     return (
       <React.Fragment>
         <form ref="form">
-        <table className="table table-bordered table-sm fontSizeForReview">
-          <thead>
-            <tr className="table-row-height">
-              <th scope="col">Category</th>
-              <td colSpan="4">
-                Your Opinion
+          <table className="table table-bordered table-sm fontSizeForReview">
+            <thead>
+              <tr className="table-row-height">
+                <th scope="col">Category</th>
+                <td colSpan="4">
+                  Your Opinion
               </td>
-            </tr>
-          </thead>
-          <tbody>
+              </tr>
+            </thead>
+            <tbody>
 
-            <tr className="table-row-height">
-              <th scope="row">Team Player</th>
-              <td>
-                <label>
-                  <input type="radio" value="1" name="teamplayer" checked={this.state.teamplayer === "1"} onChange={this.onRadioChange}/>
-                  Bad
+              <tr className="table-row-height">
+                <th scope="row">Team Player</th>
+                <td>
+                  <label>
+                    <input type="radio" value="1" name="teamplayer" checked={this.state.teamplayer === "1"} onChange={this.onRadioChange} />
+                    Bad
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="radio" value="2" name="teamplayer" checked={this.state.teamplayer === "2"} onChange={this.onRadioChange}/>
-                  Good
+                </td>
+                <td>
+                  <label>
+                    <input type="radio" value="2" name="teamplayer" checked={this.state.teamplayer === "2"} onChange={this.onRadioChange} />
+                    Good
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="radio" value="3" name="teamplayer" checked={this.state.teamplayer === "3"} onChange={this.onRadioChange}/>
-                  Very Good
+                </td>
+                <td>
+                  <label>
+                    <input type="radio" value="3" name="teamplayer" checked={this.state.teamplayer === "3"} onChange={this.onRadioChange} />
+                    Very Good
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="radio" value="4" name="teamplayer" checked={this.state.teamplayer === "4"} onChange={this.onRadioChange}/>
-                  Awesome
+                </td>
+                <td>
+                  <label>
+                    <input type="radio" value="4" name="teamplayer" checked={this.state.teamplayer === "4"} onChange={this.onRadioChange} />
+                    Awesome
                 </label>
-              </td>
-            </tr>
+                </td>
+              </tr>
 
 
-            <tr className="table-row-height">
-              <th scope="row">Participation</th>
-              <td>
-                <label>
-                  <input type="checkbox" value="1" name="birthDayEvent" checked={this.state.birthDayEvent === "1"} onChange={this.onCheckboxChange}/>
-                  Birth Day Event
+              <tr className="table-row-height">
+                <th scope="row">Participation</th>
+                <td>
+                  <label>
+                    <input type="checkbox" value="1" name="birthDayEvent" checked={this.state.birthDayEvent === "1"} onChange={this.onCheckboxChange} />
+                    Birth Day Event
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" value="2" name="appreciationEvent" checked={this.state.appreciationEvent === "2"} onChange={this.onCheckboxChange}/>
-                  Appreciation Event
+                </td>
+                <td>
+                  <label>
+                    <input type="checkbox" value="2" name="appreciationEvent" checked={this.state.appreciationEvent === "2"} onChange={this.onCheckboxChange} />
+                    Appreciation Event
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" value="3" name="teambuildingEvent" checked={this.state.teambuildingEvent === "3"} onChange={this.onCheckboxChange}/>
-                  Team building Event
+                </td>
+                <td>
+                  <label>
+                    <input type="checkbox" value="3" name="teambuildingEvent" checked={this.state.teambuildingEvent === "3"} onChange={this.onCheckboxChange} />
+                    Team building Event
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" value="4" name="hackathon" checked={this.state.hackathon === "4"} onChange={this.onCheckboxChange}/>
-                  Hackathon
+                </td>
+                <td>
+                  <label>
+                    <input type="checkbox" value="4" name="hackathon" checked={this.state.hackathon === "4"} onChange={this.onCheckboxChange} />
+                    Hackathon
                 </label>
-              </td>
-            </tr>
+                </td>
+              </tr>
 
-            <tr className="table-row-height">
-              <th scope="row">Time Management</th>
-              <td>
-                <label>
-                  <input type="radio" value="1" name="timemanagement" checked={this.state.timemanagement === "1"} onChange={this.onRadioChange}/>
-                  Bad
+              <tr className="table-row-height">
+                <th scope="row">Time Management</th>
+                <td>
+                  <label>
+                    <input type="radio" value="1" name="timemanagement" checked={this.state.timemanagement === "1"} onChange={this.onRadioChange} />
+                    Bad
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="radio" value="2" name="timemanagement" checked={this.state.timemanagement === "2"} onChange={this.onRadioChange}/>
-                  Good
+                </td>
+                <td>
+                  <label>
+                    <input type="radio" value="2" name="timemanagement" checked={this.state.timemanagement === "2"} onChange={this.onRadioChange} />
+                    Good
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="radio" value="3" name="timemanagement" checked={this.state.timemanagement === "3"} onChange={this.onRadioChange}/>
-                  Very Good
+                </td>
+                <td>
+                  <label>
+                    <input type="radio" value="3" name="timemanagement" checked={this.state.timemanagement === "3"} onChange={this.onRadioChange} />
+                    Very Good
                 </label>
-              </td>
-              <td>
-                <label>
-                  <input type="radio" value="4" name="timemanagement" checked={this.state.timemanagement === "4"} onChange={this.onRadioChange}/>
-                  Awesome
+                </td>
+                <td>
+                  <label>
+                    <input type="radio" value="4" name="timemanagement" checked={this.state.timemanagement === "4"} onChange={this.onRadioChange} />
+                    Awesome
                 </label>
-              </td>
-            </tr>
+                </td>
+              </tr>
 
-            <tr className="table-row-height">
-              <th scope="row">Quick Learner</th>
-              <td>
-                <label>
-                  <input type="radio" value="1" name="quicklearner" checked={this.state.quicklearner === "1"} onChange={this.onRadioChange}/>
-                  Yes
+              <tr className="table-row-height">
+                <th scope="row">Quick Learner</th>
+                <td>
+                  <label>
+                    <input type="radio" value="1" name="quicklearner" checked={this.state.quicklearner === "1"} onChange={this.onRadioChange} />
+                    Yes
                 </label>
-              </td>
-              <td colSpan="3">
-                <label>
-                  <input type="radio" value="2" name="quicklearner" checked={this.state.quicklearner === "2"} onChange={this.onRadioChange}/>
-                  No
+                </td>
+                <td colSpan="3">
+                  <label>
+                    <input type="radio" value="2" name="quicklearner" checked={this.state.quicklearner === "2"} onChange={this.onRadioChange} />
+                    No
                 </label>
-              </td>
+                </td>
 
-            </tr>
-            
-            <tr className="table-row-height">
-              <th scope="row">Personality</th>
-              <td>
-                <label>
-                  <input type="checkbox" value="1" name="manofword" checked={this.state.manofword === "1"} onChange={this.onCheckboxChange}/>
-                  Man of word
-                </label>
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" value="2" name="doer" checked={this.state.doer === "2"} onChange={this.onCheckboxChange}/>
-                  Doer
-                </label>
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" value="3" name="honesty_dedication" checked={this.state.honesty_dedication === "3"} onChange={this.onCheckboxChange}/>
-                  Honest and Dedicated
-                </label>
-              </td>
-              <td>
-                <label>
-                  <input type="checkbox" value="4" name="worst" checked={this.state.worst === "4"} onChange={this.onCheckboxChange}/>
-                  Worst Personality
-                </label>
-              </td>
-            </tr>
+              </tr>
 
-            
+              <tr className="table-row-height">
+                <th scope="row">Personality</th>
+                <td>
+                  <label>
+                    <input type="checkbox" value="1" name="manofword" checked={this.state.manofword === "1"} onChange={this.onCheckboxChange} />
+                    Man of word
+                </label>
+                </td>
+                <td>
+                  <label>
+                    <input type="checkbox" value="2" name="doer" checked={this.state.doer === "2"} onChange={this.onCheckboxChange} />
+                    Doer
+                </label>
+                </td>
+                <td>
+                  <label>
+                    <input type="checkbox" value="3" name="honesty_dedication" checked={this.state.honesty_dedication === "3"} onChange={this.onCheckboxChange} />
+                    Honest and Dedicated
+                </label>
+                </td>
+                <td>
+                  <label>
+                    <input type="checkbox" value="4" name="worst" checked={this.state.worst === "4"} onChange={this.onCheckboxChange} />
+                    Worst Personality
+                </label>
+                </td>
+              </tr>
 
-          </tbody>
-        </table>
-        <div className="form-group">
+
+
+            </tbody>
+          </table>
+          <div className="form-group">
             <label>Feedback : Write your feedback.</label>
-    <textarea  className="form-control input-sm form-control-xs" name="comment" placeholder="Anything more you want to let us know.." onChange={this.inputChange} value={this.state.comment}></textarea>
-        </div>
-        <div className="form-group">
-    <button disabled={ !this.state.selectedEmployee ? true : false} type="submit" className="btn btn-primary btn-sm" onClick={this.save}>{!this.state.selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
-        </div> 
+            <textarea className="form-control input-sm form-control-xs" name="comment" placeholder="Anything more you want to let us know.." onChange={this.inputChange} value={this.state.comment}></textarea>
+          </div>
+          <div className="form-group">
+            <button disabled={!this.state.selectedEmployee ? true : false} type="submit" className="btn btn-primary btn-sm" onClick={this.save}>{!this.state.selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
+          </div>
         </form>
       </React.Fragment>
     );

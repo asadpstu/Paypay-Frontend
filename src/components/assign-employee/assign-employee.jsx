@@ -38,6 +38,15 @@ class AssignEmployee extends Component {
     this.getData();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.IdReceived !== this.props.IdReceived) {
+      this.setState({
+        receivedId: this.props.IdReceived
+      });
+      this.getuserinformation(this.props.IdReceived);
+    }
+  }
+
   check(e) {
     if (e.target.checked === true) {
       this.setState({
@@ -127,9 +136,9 @@ class AssignEmployee extends Component {
         icon: "success",
         button: "ok"
       });
-      const getUpdatedList = await axios.get(appconfig.apibaseurl+"/assign-performance-review/get-all",axiosConfig);
+      const getUpdatedList = await axios.get(appconfig.apibaseurl + "/assign-performance-review/get-all", axiosConfig);
       this.setState({
-        content : getUpdatedList.data.records
+        content: getUpdatedList.data.records
       });
     }
   }
@@ -140,122 +149,139 @@ class AssignEmployee extends Component {
   SendIdState = state => {
     this.setState(state);
   };
-  
+
+  callbackFunction = () => {
+    this.getData();
+  }
 
   render() {
-    const {handlecontrol} = this.props;
+    const { handlecontrol } = this.props;
     return (
-       
-      <div className="container-fluid">
-        {handlecontrol !== "NOT-AUTHENTICATED" && 
-        <div className="row content">
-          <div className="col-sm-2 sidenav">
-            <div className="left-background">
-              <div className="ProblemStatement">Assignee  -  To Whom(count)</div>
-              <LeftSidebar content={this.state.content} SendIdState={this.SendIdState}/>
-            </div>
-            
-          </div>
-          <div className="col-sm-10">
-            <div className="right-background">
-              <div className="row content">
-                <div className="col-sm-6 sidenav">
-                  <div className="">
-                    <div className="assignEmployee">Employee Management</div>
-                    <CreateEmployee liftState={this.liftState} IdReceived={this.state.IdReceived}/>
-                  </div>
-                </div>
 
-                <div className="col-sm-3 sidenav">
-                  <div className="">
-                    <div className="assignEmployee">Assign employee</div>
-                    <div>
-                      {this.state.employeeList &&
-                        this.state.employeeList.map(single => (
-                          <div key={single._id}>
-                            <label
-                              key={single._id}
-                              className={
-                                single._id === this.state.toReview
-                                  ? "activeIt"
-                                  : "deactiveIt"
-                              }
-                            >
-                              <input
-                                checked={
-                                  single._id === this.state.toReview
-                                    ? true
-                                    : false
-                                }
-                                onChange={this.check}
-                                type="checkbox"
-                                name={single._id}
-                                value={single._id}
-                              />
-                              <small>&nbsp;{single.name}</small>
-                            </label>
-                          </div>
-                        ))}
+      <div className="container-fluid">
+        {handlecontrol !== "NOT-AUTHENTICATED" &&
+          <div className="row content">
+            <div className="col-sm-2 sidenav">
+              <div className="left-background">
+                <div className="ProblemStatement">Assignee  -  To Whom(count)</div>
+                <LeftSidebar content={this.state.content} SendIdState={this.SendIdState} />
+              </div>
+
+            </div>
+            <div className="col-sm-10">
+              <div className="right-background">
+                <div className="row content">
+                  <div className="col-sm-6 sidenav">
+                    <div className="">
+                      <div className="assignEmployee">Employee Management</div>
+                      <CreateEmployee parentCallback={this.callbackFunction} liftState={this.liftState} IdReceived={this.state.IdReceived} />
                     </div>
                   </div>
-                </div>
 
-                <div className="col-sm-3 sidenav">
-                  <div className="">
-                    <div className="toWhom">To whom</div>
-                    <div>
-                      <form ref="form">
-                        {this.state.employeeList &&
-                          this.state.employeeList.map(single => (
-                            <div key={single._id}>
-                              <label
-                                key={single._id}
-                                className={
-                                  single._id === this.state.toReview
-                                    ? "activeIt"
-                                    : "deactiveIt"
-                                }
+                  <div className="col-sm-6">
+                    <div className="row content">
+                      <div className="col-sm-6 sidenav">
+                        <div className="">
+                          <div className="assignEmployee">Assign employee [x]</div>
+                          <div>
+                            {this.state.employeeList &&
+                              this.state.employeeList.map(single => (
+                                <div key={single._id}>
+                                  <label
+                                    key={single._id}
+                                    className={
+                                      single._id === this.state.toReview
+                                        ? "activeIt"
+                                        : "deactiveIt"
+                                    }
+                                  >
+                                    <input
+                                      checked={
+                                        single._id === this.state.toReview
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={this.check}
+                                      type="checkbox"
+                                      name={single._id}
+                                      value={single._id}
+                                    />
+                                    <small>&nbsp;{single.name}</small>
+                                  </label>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-sm-6 sidenav">
+                        <div className="">
+                          <div className="toWhom">To whom [q,r,s,t,u....z]</div>
+                          <div>
+                            <form ref="form">
+                              {this.state.employeeList &&
+                                this.state.employeeList.map(single => (
+                                  <div key={single._id}>
+                                    <label
+                                      key={single._id}
+                                      className={
+                                        single._id === this.state.toReview
+                                          ? "activeIt"
+                                          : "deactiveIt"
+                                      }
+                                    >
+                                      <input
+                                        disabled={
+                                          single._id === this.state.toReview
+                                            ? true
+                                            : false
+                                        }
+                                        onChange={this.addReviewer}
+                                        type="checkbox"
+                                        name={`reviewer_${single._id}`}
+                                        value={single._id}
+                                      />
+                                      <small>&nbsp;{single.name}</small>
+                                    </label>
+                                  </div>
+                                ))}
+                            </form>
+                            <div className="form-group">
+                              <button
+                                type="submit"
+                                className="form-control-sm btn btn-success btn-sm"
+                                onClick={this.save}
                               >
-                                <input
-                                  disabled={
-                                    single._id === this.state.toReview
-                                      ? true
-                                      : false
-                                  }
-                                  onChange={this.addReviewer}
-                                  type="checkbox"
-                                  name={`reviewer_${single._id}`}
-                                  value={single._id}
-                                />
-                                <small>&nbsp;{single.name}</small>
-                              </label>
-                            </div>
-                          ))}
-                      </form>
-                      <div className="form-group">
-                        <button
-                          type="submit"
-                          className="form-control form-control-sm btn btn-primary btn-sm"
-                          onClick={this.save}
-                        >
-                          Save
+                                Assign employees
                         </button>
+                              <p> {this.state.message} </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row content">
+                      <div className="col-sm-12 note" >
+                        Rule : <br></br>
+                        1. [ x ]'s Performance can be reviewed by no. of [q,r,s,t,u....z]<br></br>
+                        2. [ x ]'s Performance can be assigned to multiple [q,r,s,t,u....z]<br></br>
                       </div>
                     </div>
                   </div>
+
                 </div>
+
               </div>
             </div>
           </div>
-        </div>
         }
-        {handlecontrol === "NOT-AUTHENTICATED" && 
-        <div>
-            <NotAuthenticated/>
-        </div>}
+        {handlecontrol === "NOT-AUTHENTICATED" &&
+          <div>
+            <NotAuthenticated />
+          </div>}
       </div>
-      
-      );
+
+    );
   }
 }
 
