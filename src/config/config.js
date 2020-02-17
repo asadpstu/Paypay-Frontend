@@ -1,6 +1,6 @@
 let appconfig = {
     "apibaseurl": "https://thawing-brook-78413.herokuapp.com",
-    "applicationBaseUrl" : "http://localhost:3000"
+    "applicationBaseUrl" : "https://radiant-headland-52476.herokuapp.com/"
   };
 
 export default  appconfig;
