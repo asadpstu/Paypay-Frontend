@@ -300,7 +300,7 @@ class ReviewForm extends Component {
             <textarea className="form-control input-sm form-control-xs" name="comment" placeholder="Anything more you want to let us know.." onChange={this.inputChange} value={this.state.comment}></textarea>
           </div>
           <div className="form-group">
-            <button disabled={!this.state.selectedEmployee ? true : false} type="submit" className="btn btn-primary btn-sm" onClick={this.save}>{!this.state.selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
+            <button disabled={!this.state.selectedEmployee ? true : false} type="submit" className="btn btn-info btn-sm" onClick={this.save}>{!this.state.selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
           </div>
         </form>
       </React.Fragment>

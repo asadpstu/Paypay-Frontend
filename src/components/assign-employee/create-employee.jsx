@@ -340,7 +340,7 @@ class CreateEmployee extends Component {
         </div>
 
         {this.props.IdReceived && <div className="form-group" >
-          <button type="submit" onClick={this.update} className="btn btn-primary btn-sm">Update selected Employee Profile</button>
+          <button type="submit" onClick={this.update} className="btn btn-info btn-sm">Update selected Employee Profile</button>
         </div>}
 
         {!this.props.IdReceived && <div className="form-group" >

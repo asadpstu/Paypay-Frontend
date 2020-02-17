@@ -148,7 +148,7 @@ class NavigationBar extends Component {
                     </div>
                     <button
                       type="submit"
-                      className="btn btn-primary mb-2  btn-sm"
+                      className="btn btn-info mb-2  btn-sm"
                       onClick={this.login}
                     >
                       Login
