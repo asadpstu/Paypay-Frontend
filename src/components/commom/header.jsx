@@ -62,7 +62,6 @@ class NavigationBar extends Component {
         isAdmin: data.loggedInUser.isAdmin
       });
     } catch (e) {
-      console.log(e);
     }
   }
 

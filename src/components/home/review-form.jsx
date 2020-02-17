@@ -129,11 +129,19 @@ class ReviewForm extends Component {
   }
 
   async getReviewby_ReviewerId_EmployeeId(reviewerId,selectedEmployee){
-    this.setState({comment : ""});
+   
+    Object.keys(this.state).map((key) => {
+      if(key !== "reviewerid" && key !== "selectedEmployee" )
+      {
+        this.setState({[key] : ''});        
+      }
+      
+      return 0;
+    });
+
     //
     const response = await axios.get(appconfig.apibaseurl+"/view/employee-performane-review/"+reviewerId+"/"+selectedEmployee,axiosConfig);
-    console.log(response.data.records.reviewer_feedback)
-    if(response){
+    if(response.data.result !== "empty"){
       this.setState({comment : response.data.records.reviewer_feedback});
       for(var i=0;i<response.data.records.performance_review.length;i++)
       {
@@ -143,7 +151,6 @@ class ReviewForm extends Component {
       }
     }
 
-    console.log(this.state)
 
   }
 

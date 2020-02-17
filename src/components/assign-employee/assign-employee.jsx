@@ -69,7 +69,6 @@ class AssignEmployee extends Component {
         [e.target.name]: null
       });
     }
-    console.log(this.state);
   }
 
   async save(e) {
@@ -152,7 +151,7 @@ class AssignEmployee extends Component {
         <div className="row content">
           <div className="col-sm-2 sidenav">
             <div className="left-background">
-              <div className="ProblemStatement">Employee / No. of Reviewer</div>
+              <div className="ProblemStatement">Name  -  (Reviewing By x px)</div>
               <LeftSidebar content={this.state.content} SendIdState={this.SendIdState}/>
             </div>
             

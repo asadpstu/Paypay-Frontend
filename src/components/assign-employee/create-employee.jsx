@@ -52,8 +52,7 @@ class CreateEmployee extends Component {
   {
     try
     {
-      const getUserInfo = await axios.get(appconfig.apibaseurl+"/employee/"+employeeId,axiosConfig);
-      console.log(getUserInfo);  
+      const getUserInfo = await axios.get(appconfig.apibaseurl+"/employee/"+employeeId,axiosConfig); 
       if(getUserInfo.status === 200)
       {
          this.setState({
@@ -78,7 +77,7 @@ class CreateEmployee extends Component {
       });
     }
 
-    console.log(this.state);
+
   }
 
   buildObject(e){
@@ -168,7 +167,6 @@ class CreateEmployee extends Component {
 
   async update(event){
     event.preventDefault();
-    console.log(event);
     
     const postData = {
       "name" : this.state.name,
@@ -245,7 +243,6 @@ class CreateEmployee extends Component {
     this.props.liftState({
       content: getallAssignedReview.data.records
     });
-    console.log(getallAssignedReview);
 
   } 
 

@@ -19,7 +19,6 @@ class App extends Component {
   componentDidMount(){
     try
     {
-       console.log(jwt(localStorage.getItem('token')))
        const checkingIsloggedin = jwt(localStorage.getItem('token'));
        this.setState({
          handlecontrol : checkingIsloggedin
@@ -28,7 +27,6 @@ class App extends Component {
     }
     catch
     {
-      console.log("Not loogedin");
       this.setState({
         handlecontrol : "NOT-AUTHENTICATED"
       })

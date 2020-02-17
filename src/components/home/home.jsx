@@ -21,14 +21,12 @@ class Home extends Component{
     async getData(){
         try
         {
-          console.log(this.props.handlecontrol.loggedInUser)  
           if(this.props.handlecontrol.loggedInUser.isAdmin === true)
           {
               const getUpdatedList = await axios.get(appconfig.apibaseurl+"/assign-performance-review/get-all",axiosConfig);
               this.setState({
                   ListofEmployee : getUpdatedList.data.records
               });
-              console.log(getUpdatedList.data.records);
           }
           else
           {
@@ -40,20 +38,18 @@ class Home extends Component{
                     ListofEmployee : getUpdatedList.data.records
                   });
 
-                  console.log(getUpdatedList.data.records)
               }
               else
               {
                 this.setState({
                     ListofEmployee : []
                 });
-                console.log("1234567890")  
               }
           }
         } 
         catch(e)
         {
-              console.log(e);
+              //console.log(e);
         } 
         this.handleClick()
     }
