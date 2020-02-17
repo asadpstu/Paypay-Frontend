@@ -1,9 +1,16 @@
 import React, { Component } from "react";
+import axios from "axios";
+import axiosConfig from "../../service/token";
+import appconfig from "../../config/config";
+import swal from "sweetalert";
 
 class ReviewForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+       comment : "",
+       selectedEmployee : "",
+       reviewerid :""
 
     };
 
@@ -41,18 +48,103 @@ class ReviewForm extends Component {
       }); 
   }
 
-  save(e){
+  async save(e){
       e.preventDefault();
-      console.log(this.state);
-      
-      this.refs.form.reset();
+      const cretateObject = [];
       Object.keys(this.state).map((key) => {
-        this.setState({[key] : null});
+        if(key !== "comment" && key !== "reviewerid" && key !== "selectedEmployee" )
+        {
+          var singlePair = {
+            "name" : key,
+            "value" : this.state[key] 
+          }   
+          cretateObject.push(singlePair);       
+        }
+        
         return 0;
       });
+
+      const postobject = {
+        "employee_id" : this.state.selectedEmployee,
+        "performance_review" : cretateObject,
+        "reviewer_feedback" : this.state.comment,
+        "reviewer_id" : this.state.reviewerid
+      }
+
+
+      try
+      {
+        const response = await axios.post(
+          appconfig.apibaseurl + "/add/employee-performane-review",
+          postobject,
+          axiosConfig
+        );
+        if (response) {
+          swal({
+            title: "Successfull",
+            text: "Thank you for your time to let us know your thought.",
+            icon: "success",
+            button: "ok"
+          });
+          Object.keys(this.state).map((key) => {
+            if(key !== "reviewerid")
+            {
+              this.setState({[key] : ''});        
+            }
+            
+            return 0;
+          });
+          
+        }        
+      }
+      catch(e)
+      {
+        swal({
+          title: "Unsuccessfull",
+          text: "Server error.Please try again.",
+          icon: "error",
+          button: "ok"
+        });
+      }
+  
+
+      
   }
 
   componentDidMount() {
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectecdUser !== this.props.selectecdUser) {
+      this.setState({
+        selectedEmployee : this.props.selectecdUser,
+        reviewerid : this.props.loggedInUserInfo.loggedInUser._id
+      })
+      if(this.props.selectecdUser && this.props.loggedInUserInfo)
+      {
+        this.getReviewby_ReviewerId_EmployeeId(this.props.loggedInUserInfo.loggedInUser._id,this.props.selectecdUser);
+      }
+    }
+
+  }
+
+  async getReviewby_ReviewerId_EmployeeId(reviewerId,selectedEmployee){
+    this.setState({comment : ""});
+    //
+    const response = await axios.get(appconfig.apibaseurl+"/view/employee-performane-review/"+reviewerId+"/"+selectedEmployee,axiosConfig);
+    console.log(response.data.records.reviewer_feedback)
+    if(response){
+      this.setState({comment : response.data.records.reviewer_feedback});
+      for(var i=0;i<response.data.records.performance_review.length;i++)
+      {
+        this.setState({
+          [response.data.records.performance_review[i].name] : response.data.records.performance_review[i].value
+        });
+      }
+    }
+
+    console.log(this.state)
+
   }
 
   render() {
@@ -207,10 +299,10 @@ class ReviewForm extends Component {
         </table>
         <div className="form-group">
             <label>Feedback : Write your feedback.</label>
-            <textarea  className="form-control input-sm form-control-xs" name="comment" placeholder="Anything more you want to let us know.." onChange={this.inputChange}></textarea>
+    <textarea  className="form-control input-sm form-control-xs" name="comment" placeholder="Anything more you want to let us know.." onChange={this.inputChange} value={this.state.comment}></textarea>
         </div>
         <div className="form-group">
-            <button type="submit" className="btn btn-primary btn-sm" onClick={this.save}>Submit</button>
+    <button disabled={ !this.state.selectedEmployee ? true : false} type="submit" className="btn btn-primary btn-sm" onClick={this.save}>{!this.state.selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
         </div> 
         </form>
       </React.Fragment>

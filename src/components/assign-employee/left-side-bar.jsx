@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import axiosConfig from "../../service/token";
 import appconfig from "../../config/config";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash,faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import swal from "sweetalert";
 
@@ -45,19 +45,17 @@ class LeftSidebar extends Component {
     delete= async (employeeId)=>{
       try
       {
-        const response = await axios.delete(appconfig.apibaseurl+"/employee/"+employeeId,axiosConfig);
-        this.setState({
-          list : response.data.records
-        });   
+        const response = await axios.delete(appconfig.apibaseurl+"/employee/"+employeeId,axiosConfig); 
         if(response.status === 200)
         {
           swal({
             title: "Success!",
             text:
-              "User Deeted",
+              "User Deleted",
             icon: "success",
             button: "ok"
           });
+          window.location.reload();
         }     
       }
       catch(e)
@@ -81,12 +79,16 @@ class LeftSidebar extends Component {
                 <div id="preview">
                    { 
                       this.state.list && this.state.list.map(single=> 
-                      (<React.Fragment>
-                        <FontAwesomeIcon key={`delete_${single._id}`} onClick={()=>this.delete(single._id)} icon={faTrash} className="erasercolor"/>
-                        <div className={this.state.selected === single._id ? "linkActive" : "problemList"} onClick={()=>this.selectEmployee(single._id)} key={`list_${single._id}`}> {single.name}  
+                      (<div onClick={()=>this.selectEmployee(single._id)} className={this.state.selected === single._id ? "linkActive" : "problemList"} key={`sibling_${single._id}`}>
+                          {
+                          !single.isAdmin ? <FontAwesomeIcon  key={`check_${single._id}`} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.delete(single._id) } } icon={faTrash}  className="erasercolor"/> : <FontAwesomeIcon  key={`check_${single._id}`} onClick={(e) => { alert('Admin account is restricted to delete') } } icon={faBan}  className="erasercolor"/>
+                          }
+                        
+                          <span key={`list_${single._id}`}> {single.name}  
                           <span className="rightEye" key={`delete_${single._id}`}> ({single.Records.length > 0 ? single.Records[0].reviewer_ids.length : 0 })</span>
-                          </div>
-                      </React.Fragment>)
+                          </span>
+                       </div>   
+                      )
                    
                    )}
                     

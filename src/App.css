@@ -46,7 +46,6 @@
 .NormalNavLink{
   color:#000!important;
   font-size: small;
-  margin-right: 15px;
 }
 
 .imageSize{
@@ -58,6 +57,7 @@
 .headerDesc{
   font-size: small;
   font-weight: 300;
+  margin-right: 30px;
 }
 .problemList{
   background-color:#FFFFFF;
@@ -69,15 +69,7 @@
   padding-left: 2px;
   font-weight: 400;
 }
-.my-facebook-button-class{
-  background-color:blue;
-  padding: 5px;
-  border: none;
-  color: #FFFFFF;
-  font-weight: 400;
-  border-radius: 0px;
-  font-size: small;
-}
+
 .ProblemStatement{
   background-color: blue;
   padding: 5px;
@@ -88,31 +80,9 @@
   margin-bottom: 2px;
 
 }
-.next{
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: small;
-  background-color: blue;
-  border: none;
-  padding: 5px;
-  float: right;
-  width:50px;
-  border-right:1px solid #FFF;
-}
 
-.Prev{
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: small;
-  background-color: blue;
-  border: none;
-  padding: 5px;
-  float: right;
-  width:50px;
-}
 .headercolor{
   color:REd!important;
-  text-transform: uppercase;
 }
 .JumbotronCustom{
   border: 1px solid #EDF4F4;
@@ -195,6 +165,10 @@
 .table-row-height{
   height: 30px!important;
 }
+.active{
+  font-weight: bolder!important;
+  color:red!important;
+}
 
 .activeIt{
   font-weight: bolder;
@@ -261,9 +235,9 @@
 
 .unauthorized{
   color: red;
+  font-size: medium;
+  font-weight: 400;
 }
-
-
 
 
 

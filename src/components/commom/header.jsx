@@ -52,6 +52,7 @@ class NavigationBar extends Component {
     }
   }
 
+  
   componentDidMount() {
     try {
       const data = jwt(localStorage.getItem("token"));
@@ -67,13 +68,22 @@ class NavigationBar extends Component {
 
   logout() {
     localStorage.removeItem("token");
-    window.location.reload();
+    window.location.href = "/";
   }
+
+  setActive = (value) =>{
+    this.setState({
+      activeMenu : value
+    });
+  }
+
+
   render() {
+
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-white ">
         <Link className="navbar-brand headercolor" to="/">
-          <strong>Paypay</strong>{" "}
+          <strong>PayPay</strong>
           <span className="headerDesc"> Corporation</span>
         </Link>
         <button
@@ -91,15 +101,18 @@ class NavigationBar extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto ">
           <li className="nav-item leftmargin">
-            <Link className="nav-link NormalNavLink" to="/">
-              Review Form
+            <Link onClick={()=>this.setActive('review')}  
+            className={ this.state.activeMenu === 'review' ? 'nav-link NormalNavLink active' : 'nav-link NormalNavLink'}
+            to="/">
+             Performance Review & Feedback
             </Link>
           </li>
             {this.state.isAdmin && (
               <React.Fragment>
                 <li className="nav-item ">
                   <Link
-                    className="nav-link NormalNavLink"
+                     onClick={()=>this.setActive('employeemanagement')}
+                     className={ this.state.activeMenu === 'employeemanagement' ? 'nav-link NormalNavLink active' : 'nav-link NormalNavLink'}
                     to="/assign-user-review"
                   >
                     Employee Management

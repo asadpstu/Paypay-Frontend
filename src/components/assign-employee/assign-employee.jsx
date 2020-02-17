@@ -148,7 +148,7 @@ class AssignEmployee extends Component {
     return (
        
       <div className="container-fluid">
-        {handlecontrol != "NOT-AUTHENTICATED" && 
+        {handlecontrol !== "NOT-AUTHENTICATED" && 
         <div className="row content">
           <div className="col-sm-2 sidenav">
             <div className="left-background">
@@ -250,7 +250,7 @@ class AssignEmployee extends Component {
           </div>
         </div>
         }
-        {handlecontrol == "NOT-AUTHENTICATED" && 
+        {handlecontrol === "NOT-AUTHENTICATED" && 
         <div>
             <NotAuthenticated/>
         </div>}
