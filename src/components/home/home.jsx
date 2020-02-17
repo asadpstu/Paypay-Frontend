@@ -85,13 +85,20 @@ class Home extends Component {
                                 <div className="ProblemStatement">
                                     Assigned Employee
                             </div>
-                                {this.state.ListofEmployee.map(single =>
+                                {this.state.ListofEmployee && this.state.ListofEmployee.map(single =>
                                     <div
                                         className={single._id === this.state.activeLink ? "linkActive" : "problemList"}
                                         onClick={() => this.handleClick(single._id, single.name, single.dept, single.position)} key={single._id}>
                                         {single.name}
-                                    </div>
+                                    </div> 
                                 )}
+
+                                { this.state.ListofEmployee.length < 1 && 
+                                    <div>
+                                         <small>No review requested yet.  </small>           
+                                    </div> 
+                                }
+
 
 
                             </div>
