@@ -40,7 +40,7 @@
  
 }
 .right-background{
-  border-top: 2px solid blue; 
+  border-top: 2px solid #000; 
 }
 
 .NormalNavLink{
@@ -70,11 +70,21 @@
   font-weight: 400;
 }
 
+.ListForLeftSideBar{
+  background-color:#FFFFFF;
+  cursor: pointer;
+  padding-top:3px;
+  padding-bottom:3px;
+  font-size: small;
+  padding-left: 2px;
+  font-weight: 400;
+}
+
 .ProblemStatement{
-  background-color: blue;
+  background-color: RED;
   padding: 5px;
-  border: none;
-  color: #FFFFFF;
+  border:none; 
+  color: #FFF;
   font-weight: 400;
   font-size: small;
   margin-bottom: 2px;
@@ -140,12 +150,12 @@
   font-size: small;  
   padding-top:3px;
   padding-bottom:3px;
-  border-bottom: 1px solid #EDF4F4;
+  border-bottom: 3px solid red;
   font-size: small;
   padding-left: 2px;
   font-weight: 400;
   color: #000;
-  background-color: #e0ccff;
+  
 }
 
 .fontSizeForReview{
@@ -166,8 +176,9 @@
   height: 30px!important;
 }
 .active{
-  font-weight: bolder!important;
-  color:red!important;
+  font-weight: 700!important;
+  color:#282c34!important;
+  font-weight: 400;
 }
 
 .activeIt{
@@ -181,11 +192,11 @@
 
 .assignEmployee{
   background-color: white;
-  padding: 5px;
-  border-top: 0px solid blue;
-  border-bottom: 2px solid blue;
-  border-left: 0px solid blue;
-  border-right: 0px solid blue;  
+  padding: 5px 0px;
+  border-top: 0px solid black;
+  border-bottom: 2px solid black;
+  border-left: 0px solid black;
+  border-right: 0px solid black;  
   color: #000;
   font-weight: 400;
   font-size: small;
@@ -194,11 +205,11 @@
 
 .toWhom{
   background-color: white;
-  padding: 5px;
-  border-top: 0px solid blue;
-  border-bottom: 2px solid blue;
-  border-left: 0px solid blue;
-  border-right: 0px solid blue;  
+  padding: 5px 0px;
+  border-top: 0px solid black;
+  border-bottom: 2px solid black;
+  border-left: 0px solid black;
+  border-right: 0px solid black;  
   color: #000;
   font-weight: 400;
   font-size: small;
@@ -241,9 +252,10 @@
 
 
 .note{
-  color:green;
+  color:rgb(10, 14, 10);
   font-size: small;
-  font-weight: 600;
+  font-weight: 500;
+  text-indent: 3ch;
 
 }
 

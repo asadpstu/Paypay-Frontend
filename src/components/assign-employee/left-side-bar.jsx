@@ -76,15 +76,18 @@ class LeftSidebar extends Component {
           <div id="preview">
             {
               this.state.list && this.state.list.map(single =>
-                (<div onClick={() => this.selectEmployee(single._id)} className={this.state.selected === single._id ? "linkActive" : "problemList"} key={`sibling_${single._id}`}>
-                  {
-                    !single.isAdmin ? <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.delete(single._id) }} icon={faTrash} className="erasercolor" /> : <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { alert('Admin account is restricted to delete') }} icon={faBan} className="erasercolor" />
-                  }
+                (<div onClick={() => this.selectEmployee(single._id)} className={this.state.selected === single._id ? "linkActive" : "ListForLeftSideBar"} key={`sibling_${single._id}`}>
+                  
 
-                  <span key={`list_${single._id}`}> {single.name}
-                    <span className="rightEye" key={`delete_${single._id}`}> ({single.Records.length > 0 ? single.Records[0].reviewer_ids.length : 0})</span>
-                  </span>
-                </div>
+                    <div align="left" key={`list_${single._id}`}>
+                    {
+                    !single.isAdmin ? <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.delete(single._id) }} icon={faTrash} className="erasercolor" /> : <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { alert('Admin account is restricted to delete') }} icon={faBan} className="erasercolor" />
+                    }
+                      
+                      &nbsp; <strong>{single.name}</strong>
+                    - <small>will be reviewed by {single.Records.length > 0 ? single.Records[0].reviewer_ids.length : 0} pax.</small>
+                    </div>
+                  </div>
                 )
 
               )}

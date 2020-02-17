@@ -103,7 +103,7 @@ class AssignEmployee extends Component {
       swal({
         title: "Error!",
         text:
-          "Can't assign. Please select Employee from Assign employee section",
+          "Can't assign. Please select from {To Review} and {Reviewer} section.",
         icon: "error",
         button: "ok"
       });
@@ -182,7 +182,7 @@ class AssignEmployee extends Component {
                     <div className="row content">
                       <div className="col-sm-6 sidenav">
                         <div className="">
-                          <div className="assignEmployee">Assign employee [x]</div>
+                          <div className="assignEmployee">To Review [x]</div>
                           <div>
                             {this.state.employeeList &&
                               this.state.employeeList.map(single => (
@@ -216,7 +216,7 @@ class AssignEmployee extends Component {
 
                       <div className="col-sm-6 sidenav">
                         <div className="">
-                          <div className="toWhom">To whom [q,r,s,t,u....z]</div>
+                          <div className="toWhom">Reviewer [q,r,s,t,u....z]</div>
                           <div>
                             <form ref="form">
                               {this.state.employeeList &&
@@ -249,7 +249,7 @@ class AssignEmployee extends Component {
                             <div className="form-group">
                               <button
                                 type="submit"
-                                className="form-control-sm btn btn-success btn-sm"
+                                className="form-control-sm btn btn-info btn-sm"
                                 onClick={this.save}
                               >
                                 Assign employees
@@ -259,12 +259,15 @@ class AssignEmployee extends Component {
                           </div>
                         </div>
                       </div>
+                    
+                    
                     </div>
                     <div className="row content">
-                      <div className="col-sm-12 note" >
-                        Rule : <br></br>
-                        1. [ x ]'s Performance can be reviewed by no. of [q,r,s,t,u....z]<br></br>
-                        2. [ x ]'s Performance can be assigned to multiple [q,r,s,t,u....z]<br></br>
+                      <div className="col-sm-12" >
+                        <small><strong>Rule :</strong></small> <br></br>
+
+                        <div className="note">1. [ x ]'s Employee Performance can be reviewed by no. of Reviewer. [q,r,s,t,u....z]</div>
+                        <div className="note">2. [ x ]'s Employee Performance can be assigned to multiple Reviewer [q,r,s,t,u....z]</div>
                       </div>
                     </div>
                   </div>

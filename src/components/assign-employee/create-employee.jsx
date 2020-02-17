@@ -344,7 +344,7 @@ class CreateEmployee extends Component {
         </div>}
 
         {!this.props.IdReceived && <div className="form-group" >
-          <button type="submit" onClick={this.save} className="btn btn-primary btn-sm">Save as new employee</button>
+          <button type="submit" onClick={this.save} className="btn btn-info btn-sm">Save as new employee</button>
         </div>}
 
         {/* <textarea id="editor" placeholder="Enter text here" onChange={this.handleChange}></textarea> */}
