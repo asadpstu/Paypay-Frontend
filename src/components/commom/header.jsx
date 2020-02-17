@@ -108,7 +108,7 @@ class NavigationBar extends Component {
           </li>
             {this.state.isAdmin && (
               <React.Fragment>
-                <li className="nav-item ">
+                <li className="nav-item leftmargin">
                   <Link
                      onClick={()=>this.setActive('employeemanagement')}
                      className={ this.state.activeMenu === 'employeemanagement' ? 'nav-link NormalNavLink active' : 'nav-link NormalNavLink'}

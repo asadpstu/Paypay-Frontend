@@ -157,7 +157,7 @@
   height: 30px;
   padding: 10px!important;
   font-size: 12px !important;
-  line-height: 7.5;
+  line-height: 2.0;
   border-radius: .2rem;
   border: 1px solid #cccccc;
 }
@@ -219,7 +219,7 @@
 }
 
 .leftmargin{
-  margin-left: 20px;
+  margin-left: 18px;
 }
 
 .logout{
