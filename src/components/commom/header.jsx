@@ -39,6 +39,7 @@ class NavigationBar extends Component {
       );
       if (response.status === 200) {
         localStorage.setItem("token", response.data["x-access-token"]);
+        localStorage.setItem("isAdmin", response.data["isAdmin"]);
         window.location.reload();
       }
     } catch {
@@ -56,17 +57,24 @@ class NavigationBar extends Component {
   componentDidMount() {
     try {
       const data = jwt(localStorage.getItem("token"));
+      let toactive = localStorage.getItem("activeMenu");
+      if(!toactive){
+        toactive = "review";
+      }
       this.setState({
         response: "authenticated",
         username: data.loggedInUser.name,
-        isAdmin: data.loggedInUser.isAdmin
+        isAdmin: data.loggedInUser.isAdmin,
+        activeMenu : toactive
       });
+      
     } catch (e) {
     }
   }
 
   logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("activeMenu");
     window.location.href = "/";
   }
 
@@ -74,6 +82,8 @@ class NavigationBar extends Component {
     this.setState({
       activeMenu: value
     });
+    localStorage.setItem("activeMenu",value);
+
   }
 
 

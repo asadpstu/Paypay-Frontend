@@ -71,6 +71,8 @@ class LeftSidebar extends Component {
 
   render() {
     return (
+      <React.Fragment>
+      <div className="ProblemStatement">Employee  vs  Reviewer(count)</div>
       <div className="column">
         <div className="col-body">
           <div id="preview">
@@ -95,6 +97,7 @@ class LeftSidebar extends Component {
           </div>
         </div>
       </div>
+      </React.Fragment>
     );
   }
 }
