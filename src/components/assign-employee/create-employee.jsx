@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+//For http operation
 import axios from "axios";
 import axiosConfig from "../../service/token";
 import appconfig from "../../config/config";
+//For alert message
 import swal from "sweetalert";
+//For validation client side
 import joi from "joi-browser";
 
 class CreateEmployee extends Component {
@@ -66,8 +69,8 @@ class CreateEmployee extends Component {
     }
     catch (e) {
       swal({
-        title: "Failed",
-        text: "Unable to fetch data",
+        title: "warning",
+        text: "User has been remove",
         icon: "warning",
         button: "ok"
       });
@@ -148,7 +151,7 @@ class CreateEmployee extends Component {
     catch (e) {
       swal({
         title: "Failed",
-        text: "Duplicate record found!",
+        text: "Duplicate record found! Email && Passport/NID should be unique",
         icon: "error",
         button: "ok",
       });

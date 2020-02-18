@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+//For Http operation
 import axios from "axios";
 import axiosConfig from "../../service/token";
 import appconfig from "../../config/config";
+//For alert message
 import swal from "sweetalert";
 
 class ReviewForm extends Component {
@@ -11,7 +13,6 @@ class ReviewForm extends Component {
       comment: "",
       selectedEmployee: "",
       reviewerid: ""
-
     };
 
     this.onRadioChange = this.onRadioChange.bind(this)
@@ -95,7 +96,7 @@ class ReviewForm extends Component {
     catch (e) {
       swal({
         title: "Unsuccessfull",
-        text: "Server error.Please try again.",
+        text: "Feedback field is mandatory.",
         icon: "error",
         button: "ok"
       });
@@ -109,35 +110,36 @@ class ReviewForm extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.selectecdUser !== this.props.selectecdUser) {
+    const {reviewed_id,reviewer_id}  = this.props;
+    if (prevProps.reviewed_id !== reviewed_id || prevProps.reviewer_id !== reviewer_id) {
       this.setState({
-        selectedEmployee: this.props.selectecdUser,
-        reviewerid: this.props.loggedInUserInfo.loggedInUser._id
+        selectedEmployee: reviewed_id,
+        reviewerid: reviewer_id
       })
-      if (this.props.selectecdUser && this.props.loggedInUserInfo) {
-        this.getReviewby_ReviewerId_EmployeeId(this.props.loggedInUserInfo.loggedInUser._id, this.props.selectecdUser);
+      if (reviewed_id && reviewer_id) {
+        this.getReviewby_ReviewerId_EmployeeId(reviewer_id, reviewed_id);
       }
     }
 
   }
 
   async getReviewby_ReviewerId_EmployeeId(reviewerId, selectedEmployee) {
-
+    
     Object.keys(this.state).map((key) => {
       if (key !== "reviewerid" && key !== "selectedEmployee") {
         this.setState({ [key]: '' });
       }
-
       return 0;
     });
 
-    //
+    
     const response = await axios.get(appconfig.apibaseurl + "/view/employee-performane-review/" + reviewerId + "/" + selectedEmployee, axiosConfig);
-    if (response.data.result !== "empty") {
-      this.setState({ comment: response.data.records.reviewer_feedback });
-      for (var i = 0; i < response.data.records.performance_review.length; i++) {
+    const {records,result} = response.data;
+    if (result !== "empty") {
+      this.setState({ comment: records.reviewer_feedback });
+      for (var i = 0; i < records.performance_review.length; i++) {
         this.setState({
-          [response.data.records.performance_review[i].name]: response.data.records.performance_review[i].value
+          [records.performance_review[i].name]: records.performance_review[i].value
         });
       }
     }
@@ -146,7 +148,7 @@ class ReviewForm extends Component {
   }
 
   render() {
-    const {teamplayer,birthDayEvent,appreciationEvent,teambuildingEvent,hackathon,timemanagement,quicklearner,manofword,doer,honesty_dedication,worst,comment} = this.state;
+    const {teamplayer,birthDayEvent,appreciationEvent,teambuildingEvent,hackathon,timemanagement,quicklearner,manofword,doer,honesty_dedication,worst,comment,selectedEmployee} = this.state;
     return (
       <React.Fragment>
         <form ref="form">
@@ -300,7 +302,7 @@ class ReviewForm extends Component {
             <textarea className="form-control input-sm form-control-xs" name="comment" placeholder="Anything more you want to let us know.." onChange={this.inputChange} value={comment}></textarea>
           </div>
           <div className="form-group">
-            <button disabled={!this.state.selectedEmployee ? true : false} type="submit" className="btn btn-info btn-sm" onClick={this.save}>{!this.state.selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
+            <button disabled={!selectedEmployee ? true : false} type="submit" className="btn btn-info btn-sm" onClick={this.save}>{!selectedEmployee ? 'Note : To continue please select an Employee from Left side ( Assigned Employee section) if list is available' : 'Submit'}</button>
           </div>
         </form>
       </React.Fragment>

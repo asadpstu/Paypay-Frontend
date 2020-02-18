@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+//for http
 import axios from "axios";
 import axiosConfig from "../../service/token";
-import swal from "sweetalert";
-import CreateEmployee from "./create-employee";
 import appconfig from "../../config/config";
+
+//For alert message
+import swal from "sweetalert";
+
+//Imporing module
+import CreateEmployee from "./create-employee";
 import LeftSidebar from "./left-side-bar";
 import NotAuthenticated from "../commom/not-authenticated";
 
@@ -156,6 +161,7 @@ class AssignEmployee extends Component {
 
   render() {
     const { handlecontrol } = this.props;
+    const {content,IdReceived,toReview,employeeList,message} = this.state;
     return (
 
       <div className="container-fluid">
@@ -164,7 +170,7 @@ class AssignEmployee extends Component {
             <div className="col-sm-2 sidenav">
               <div className="left-background">
                 
-                <LeftSidebar content={this.state.content} SendIdState={this.SendIdState} />
+                <LeftSidebar content={content} SendIdState={this.SendIdState} />
               </div>
 
             </div>
@@ -174,7 +180,7 @@ class AssignEmployee extends Component {
                   <div className="col-sm-6 sidenav">
                     <div className="">
                       <div className="assignEmployee">Employee Management</div>
-                      <CreateEmployee parentCallback={this.callbackFunction} liftState={this.liftState} IdReceived={this.state.IdReceived} />
+                      <CreateEmployee parentCallback={this.callbackFunction} liftState={this.liftState} IdReceived={IdReceived} />
                     </div>
                   </div>
 
@@ -184,20 +190,20 @@ class AssignEmployee extends Component {
                         <div className="">
                           <div className="assignEmployee">To Review [x]</div>
                           <div>
-                            {this.state.employeeList &&
-                              this.state.employeeList.map(single => (
+                            {employeeList &&
+                              employeeList.map(single => (
                                 <div key={single._id}>
                                   <label
                                     key={single._id}
                                     className={
-                                      single._id === this.state.toReview
+                                      single._id === toReview
                                         ? "activeIt"
                                         : "deactiveIt"
                                     }
                                   >
                                     <input
                                       checked={
-                                        single._id === this.state.toReview
+                                        single._id === toReview
                                           ? true
                                           : false
                                       }
@@ -219,20 +225,20 @@ class AssignEmployee extends Component {
                           <div className="toWhom">Reviewer [q,r,s,t,u....z]</div>
                           <div>
                             <form ref="form">
-                              {this.state.employeeList &&
-                                this.state.employeeList.map(single => (
+                              {employeeList &&
+                                employeeList.map(single => (
                                   <div key={single._id}>
                                     <label
                                       key={single._id}
                                       className={
-                                        single._id === this.state.toReview
+                                        single._id === toReview
                                           ? "activeIt"
                                           : "deactiveIt"
                                       }
                                     >
                                       <input
                                         disabled={
-                                          single._id === this.state.toReview
+                                          single._id === toReview
                                             ? true
                                             : false
                                         }
@@ -254,7 +260,7 @@ class AssignEmployee extends Component {
                               >
                                 Assign employees
                         </button>
-                              <p> {this.state.message} </p>
+                              <p> {message} </p>
                             </div>
                           </div>
                         </div>

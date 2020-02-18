@@ -70,6 +70,7 @@ class LeftSidebar extends Component {
 
 
   render() {
+    const {list,selected} = this.state;
     return (
       <React.Fragment>
       <div className="ProblemStatement">Employee  vs  Reviewer(count)</div>
@@ -77,13 +78,15 @@ class LeftSidebar extends Component {
         <div className="col-body">
           <div id="preview">
             {
-              this.state.list && this.state.list.map(single =>
-                (<div onClick={() => this.selectEmployee(single._id)} className={this.state.selected === single._id ? "linkActive" : "ListForLeftSideBar"} key={`sibling_${single._id}`}>
+              list && list.map(single =>
+                (<div onClick={() => this.selectEmployee(single._id)} className={selected === single._id ? "linkActive" : "ListForLeftSideBar"} key={`sibling_${single._id}`}>
                   
 
                     <div align="left" key={`list_${single._id}`}>
                     {
-                    !single.isAdmin ? <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.delete(single._id) }} icon={faTrash} className="erasercolor" /> : <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { alert('Admin account is restricted to delete') }} icon={faBan} className="erasercolor" />
+                    !single.isAdmin ? 
+                    
+                    <FontAwesomeIcon key={`check_${single._id}`} disabled={single.Records.length > 0 ? true : false} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.delete(single._id) }} icon={faTrash} className="erasercolor" /> : <FontAwesomeIcon key={`check_${single._id}`} onClick={(e) => { alert('Admin account is restricted to delete') }} icon={faBan} className="erasercolor" />
                     }
                       
                       &nbsp; <strong>{single.name}</strong>
